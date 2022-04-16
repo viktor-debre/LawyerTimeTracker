@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
 
 namespace LawyerTimeTracker
 {
@@ -26,9 +28,10 @@ namespace LawyerTimeTracker
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("MariaDBConnectionString");
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection));
-            services.AddControllersWithViews();
+            services.AddDbContextPool<ApplicationContext>(options =>
+                options.UseMySql(connection, ServerVersion.AutoDetect(connection) ));
+            
+            services.AddControllersWithViews(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
