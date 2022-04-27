@@ -20,18 +20,23 @@ namespace LawyerTimeTracker.Controllers
             db = context;
         }
 
-        public IActionResult Create()
+        public IActionResult Index()
+        {
+            return View();
+        }
+        
+        public IActionResult AddUser()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> AddUser(User user)
         {
             db.Users.Add(user);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewUser");
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ViewUser()
         {
             return View(await db.Users.ToListAsync());
             //return View();
