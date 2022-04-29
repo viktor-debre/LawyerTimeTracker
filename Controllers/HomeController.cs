@@ -13,11 +13,11 @@ namespace LawyerTimeTracker.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private ApplicationContext db;
+        private ApplicationContext databaseContext;
         public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
-            db = context;
+            databaseContext = context;
         }
 
         public IActionResult Index()
@@ -32,13 +32,13 @@ namespace LawyerTimeTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(User user)
         {
-            db.Users.Add(user);
-            await db.SaveChangesAsync();
+            databaseContext.Users.Add(user);
+            await databaseContext.SaveChangesAsync();
             return RedirectToAction("ViewUser");
         }
         public async Task<IActionResult> ViewUser()
         {
-            return View(await db.Users.ToListAsync());
+            return View(await databaseContext.Users.ToListAsync());
             //return View();
         }
 
