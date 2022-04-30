@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LawyerTimeTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
@@ -20,9 +21,10 @@ namespace LawyerTimeTracker.Controllers
             databaseContext = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            return View();
+            return Content(User.Identity.Name);
         }
         
         public IActionResult AddUser()
