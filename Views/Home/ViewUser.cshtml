@@ -1,0 +1,12 @@
+@model IEnumerable<LawyerTimeTracker.Models.User>
+@{
+    ViewBag.Title = "Все пользователи";
+}
+<a asp-action="addUser">Добавить пользователя</a>
+<table class="table">
+    <tr><td>Имя</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.Name</td></tr>
+    }
+</table>

@@ -6,21 +6,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LawyerTimeTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationContext databaseContext;
+        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
+            databaseContext = context;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+        
+        public IActionResult AddUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddUser(User user)
+        {
+            databaseContext.Users.Add(user);
+            await databaseContext.SaveChangesAsync();
+            return RedirectToAction("ViewUser");
+        }
+        public async Task<IActionResult> ViewUser()
+        {
+            return View(await databaseContext.Users.ToListAsync());
+            //return View();
         }
 
         public IActionResult Privacy()
