@@ -24,26 +24,10 @@ namespace LawyerTimeTracker.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return Content(User.Identity.Name);
-        }
-        
-        public IActionResult AddUser()
-        {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
-        {
-            databaseContext.Users.Add(user);
-            await databaseContext.SaveChangesAsync();
-            return RedirectToAction("ViewUser");
-        }
-        public async Task<IActionResult> ViewUser()
-        {
-            return View(await databaseContext.Users.ToListAsync());
-            //return View();
-        }
-
+        
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
@@ -52,6 +36,12 @@ namespace LawyerTimeTracker.Controllers
         public IActionResult Help()
         {
             return View();
+        }
+        
+        [Authorize]
+        public async Task<IActionResult> ViewUser()
+        {
+            return View(await databaseContext.Users.ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
