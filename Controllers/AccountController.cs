@@ -25,7 +25,7 @@ namespace LawyerTimeTracker.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
