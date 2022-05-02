@@ -32,12 +32,13 @@ namespace LawyerTimeTracker.Controllers
             if (ModelState.IsValid)
             {
                 User user = await databaseContext.Users
+                    .Include(userInDatabase => userInDatabase.Role)
                     .FirstOrDefaultAsync(userInDatabase =>
                         userInDatabase.Name == model.Name && userInDatabase.Password == model.Password
                         );
                 if (user != null)
                 {
-                    await Authenticate(model.Name);
+                    await Authenticate(user);
                     
                     return RedirectToAction("Index","Home");
                 }
@@ -62,10 +63,17 @@ namespace LawyerTimeTracker.Controllers
                     .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
                 if (user == null)
                 {
-                    databaseContext.Users.Add(new User { Name = model.Name, Password = model.Password });
+                    user = new User {Name = model.Name, Password = model.Password};
+                    Role userRole = await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                    if (userRole != null)
+                    {
+                        user.Role = userRole;
+                    }
+
+                    databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
  
-                    await Authenticate(model.Name);
+                    await Authenticate(user);
  
                     return RedirectToAction("Index", "Home");
                 }
@@ -77,11 +85,12 @@ namespace LawyerTimeTracker.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(User user)
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType,userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims,
                 "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
