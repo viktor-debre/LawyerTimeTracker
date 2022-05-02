@@ -38,7 +38,7 @@ namespace LawyerTimeTracker.Controllers
             return View();
         }
         
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUser()
         {
             return View(await databaseContext.Users.ToListAsync());
