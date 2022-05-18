@@ -33,6 +33,7 @@ namespace LawyerTimeTracker.Controllers
             return View();
         }
         
+        [Authorize]
         public IActionResult Help()
         {
             return View();
