@@ -14,6 +14,7 @@ namespace LawyerTimeTracker.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Need remove in future, required for better testing
             string adminRoleName = "admin";
             string userRoleName = "user";
  
