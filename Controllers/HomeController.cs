@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LawyerTimeTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
@@ -20,36 +21,28 @@ namespace LawyerTimeTracker.Controllers
             databaseContext = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
         
-        public IActionResult AddUser()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
-        {
-            databaseContext.Users.Add(user);
-            await databaseContext.SaveChangesAsync();
-            return RedirectToAction("ViewUser");
-        }
-        public async Task<IActionResult> ViewUser()
-        {
-            return View(await databaseContext.Users.ToListAsync());
-            //return View();
-        }
-
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
         }
         
+        [Authorize]
         public IActionResult Help()
         {
             return View();
+        }
+        
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> ViewUser()
+        {
+            return View(await databaseContext.Users.ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
