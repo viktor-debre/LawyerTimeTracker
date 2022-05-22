@@ -21,10 +21,10 @@ namespace LawyerTimeTracker.Models
             string adminName = "Viktor";
             string adminPassword = "123456";
             
-            Role adminRole = new Role { Id = 1, Name = adminRoleName };
-            Role userRole = new Role { Id = 2, Name = userRoleName };
+            Role adminRole = new Role { Name = adminRoleName };
+            Role userRole = new Role { Name = userRoleName };
             
-            User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleId = adminRole.Id };
+            User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
             
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
