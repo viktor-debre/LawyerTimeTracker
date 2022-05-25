@@ -26,7 +26,7 @@ namespace LawyerTimeTracker.Models
             
             User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
 
-            Issue firstTask = new Issue {Id = 1, Title = "Test issue", TypeOfTask = "Lowyer dovumentation", UserId = 1};
+            Issue firstTask = new Issue {Id = 1, Title = "Test issue", TypeOfTask = "Lawyer documentation", UserId = 1};
             
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
