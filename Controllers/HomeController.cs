@@ -39,6 +39,11 @@ namespace LawyerTimeTracker.Controllers
             return View();
         }
         
+        public IActionResult MyTasks()
+        {
+            return View();
+        }
+        
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUser()
         {
