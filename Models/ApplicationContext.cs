@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Models
@@ -6,6 +7,7 @@ namespace LawyerTimeTracker.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Issue> Issues { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -26,11 +28,21 @@ namespace LawyerTimeTracker.Models
             
             User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
             
-            Issue firstTask = new Issue {Id = 1, Title = "Test issue", TypeOfTask = "Lawyer documentation", UserId = 1};
+            Issue firstTask = new Issue {Id = 1, Title = "Test issue 1", TypeOfTask = "Lawyer documentation", UserId = 1};
+            Issue secondTask = new Issue
+            {
+                Id = 2, Title = "Test issue 2", TypeOfTask = "Lawyer documentation", UserId = 1,
+                StartTime = DateTime.Now
+            };
+            Issue thirdTask = new Issue
+            {
+                Id = 3, Title = "Test issue 3", TypeOfTask = "Lawyer documentation", UserId = 1,
+                StartTime = DateTime.Now, EndTime = DateTime.Now
+            };
 
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
-            modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask });
+            modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask });
             base.OnModelCreating(modelBuilder);
         }
     }

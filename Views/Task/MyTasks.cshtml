@@ -1,13 +1,53 @@
+@model IEnumerable<Issue>
 @{
-    ViewData["Title"] = "My Tasks";
+    ViewBag.Title = "All users";
 }
-<h1>@ViewData["Tasks"]</h1>
-
+@{
+    List<Issue> toDo = new();
+    List<Issue> inProgress = new();
+    List<Issue> done = new();
+}
+@foreach (var item in Model)
+{
+    if (@item.StartTime == null && @item.EndTime == null)
+    {
+        toDo.Add(item);
+    }
+    else if (@item.EndTime == null)
+    {
+        inProgress.Add(item);
+    }
+    else
+    {
+        done.Add(item);
+    }
+}
 <div class="board">
     <div class="board-column">
         <div class="board-column-title">To do</div>
         <div class="board-column-items">
-            <div class="board-column-item">Item</div>
+            @foreach (var issue in toDo)
+            {
+                <div class="board-column-item">@issue.Title</div>
+            }
+        </div>
+    </div>
+    <div class="board-column">
+        <div class="board-column-title">In progress</div>
+        <div class="board-column-items">
+            @foreach (var issue in inProgress)
+            {
+                <div class="board-column-item">@issue.Title</div>
+            }
+        </div>
+    </div>
+    <div class="board-column">
+        <div class="board-column-title">Done</div>
+        <div class="board-column-items">
+            @foreach (var issue in done)
+            {
+                <div class="board-column-item">@issue.Title</div>
+            }
         </div>
     </div>
 </div>
