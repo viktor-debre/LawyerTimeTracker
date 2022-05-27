@@ -35,13 +35,14 @@ namespace LawyerTimeTracker.Controllers
                     .Include(userInDatabase => userInDatabase.Role)
                     .FirstOrDefaultAsync(userInDatabase =>
                         userInDatabase.Name == model.Name && userInDatabase.Password == model.Password
-                        );
+                    );
                 if (user != null)
                 {
                     await Authenticate(user);
-                    
-                    return RedirectToAction("Index","Home");
+
+                    return RedirectToAction("Index", "Home");
                 }
+
                 ModelState.AddModelError("", "Incorrect name or password");
             }
 
@@ -53,6 +54,7 @@ namespace LawyerTimeTracker.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -63,7 +65,7 @@ namespace LawyerTimeTracker.Controllers
                     .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
                 if (user == null)
                 {
-                    user = new User {Name = model.Name, Password = model.Password};
+                    user = new User { Name = model.Name, Password = model.Password };
                     Role userRole = await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
                     if (userRole != null)
                     {
@@ -72,10 +74,8 @@ namespace LawyerTimeTracker.Controllers
 
                     databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
- 
-                    await Authenticate(user);
- 
-                    return RedirectToAction("Index", "Home");
+                    // TODO: oleksiii: write message 'User registered successfully'
+                    return RedirectToAction("ViewUsers", "Home");
                 }
                 else
                 {
@@ -89,14 +89,14 @@ namespace LawyerTimeTracker.Controllers
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Name),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims,
                 "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-        
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
