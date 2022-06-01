@@ -101,10 +101,18 @@ body {
   color: #bd2130;
 }
 
-.board-column-item {
+.board-column-issue {
   padding: 10px 15px;
   box-sizing: border-box;
   background: white;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.board-column-issue-title{
+  font-size: 14px;
+}
+
+.board-column-issue-item{
+  font-size: 10px;
 }
