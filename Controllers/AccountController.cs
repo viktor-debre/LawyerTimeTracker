@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using LawyerTimeTracker.ViewModels;
+using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
@@ -74,10 +74,8 @@ namespace LawyerTimeTracker.Controllers
 
                     databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
-
-                    await Authenticate(user);
-
-                    return RedirectToAction("Index", "Home");
+                    // TODO: oleksiii: write message 'User registered successfully'
+                    return RedirectToAction("ViewUsers", "Home");
                 }
                 else
                 {
