@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using LawyerTimeTracker.ViewModels;
+using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
@@ -65,7 +65,7 @@ namespace LawyerTimeTracker.Controllers
                     .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
                 if (user == null)
                 {
-                    user = new User { Name = model.Name, Password = model.Password };
+                    user = new User {Name = model.Name, Password = model.Password};
                     Role userRole = await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
                     if (userRole != null)
                     {
@@ -82,6 +82,7 @@ namespace LawyerTimeTracker.Controllers
                     ModelState.AddModelError("", "The user with this nickname has already existed.");
                 }
             }
+
             return View(model);
         }
 

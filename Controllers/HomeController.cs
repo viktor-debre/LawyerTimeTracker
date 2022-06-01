@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using LawyerTimeTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace LawyerTimeTracker.Controllers
 {
@@ -15,6 +12,7 @@ namespace LawyerTimeTracker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationContext databaseContext;
+
         public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
@@ -26,25 +24,25 @@ namespace LawyerTimeTracker.Controllers
         {
             return View();
         }
-        
+
         [Authorize]
         public IActionResult Privacy()
         {
             return View();
         }
-        
+
         [Authorize]
         public IActionResult Help()
         {
             return View();
         }
-        
+
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUsers()
         {
             return View(await databaseContext.Users.ToListAsync());
         }
-        
+
         public IActionResult GetProfile()
         {
             return View();
