@@ -41,9 +41,6 @@ namespace LawyerTimeTracker.Models
                 StartTime = DateTime.Now, EndTime = DateTime.Now
             };
             
-            modelBuilder.Entity<Role>().HasData(new Role[] {adminRole, userRole});
-            modelBuilder.Entity<User>().HasData(new User[] {adminUser});
-            modelBuilder.Entity<Issue>().HasData(new Issue[] {firstTask, secondTask, thirdTask});
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
             modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask });
