@@ -8,6 +8,7 @@ namespace LawyerTimeTracker.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Issue> Issues { get; set; }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -19,7 +20,7 @@ namespace LawyerTimeTracker.Models
             //Need remove in future, required for better testing
             string adminRoleName = "admin";
             string userRoleName = "user";
- 
+
             string adminName = "Viktor";
             string adminPassword = "123456";
             
@@ -39,7 +40,10 @@ namespace LawyerTimeTracker.Models
                 Id = 3, Title = "Test issue 3", TypeOfTask = "Lawyer documentation", UserId = 1,
                 StartTime = DateTime.Now, EndTime = DateTime.Now
             };
-
+            
+            modelBuilder.Entity<Role>().HasData(new Role[] {adminRole, userRole});
+            modelBuilder.Entity<User>().HasData(new User[] {adminUser});
+            modelBuilder.Entity<Issue>().HasData(new Issue[] {firstTask, secondTask, thirdTask});
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
             modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask });

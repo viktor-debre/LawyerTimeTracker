@@ -21,8 +21,24 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Help">Help</a>
                     </li>
+                    @{
+                        // TODO: oleksiii: stylize class "username"
+                        <li>
+                            <a class="nav-link text-dark username" asp-area="" asp-controller="Home" asp-action="GetProfile">@User.Identity.Name</a>
+                        </li>
+
+                        if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewUsers">View Users</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Add User</a>
+                            </li>
+                        }
+                    }
                     <li>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewUser">ViewUser</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewUsers">ViewUser</a>
                     </li>
                     <li>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="MyTasks">Tasks</a>

@@ -1,5 +1,3 @@
-using System;
-
 namespace LawyerTimeTracker.Models
 {
     public class ErrorViewModel

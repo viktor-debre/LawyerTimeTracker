@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using LawyerTimeTracker.ViewModels;
+using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
@@ -35,13 +35,14 @@ namespace LawyerTimeTracker.Controllers
                     .Include(userInDatabase => userInDatabase.Role)
                     .FirstOrDefaultAsync(userInDatabase =>
                         userInDatabase.Name == model.Name && userInDatabase.Password == model.Password
-                        );
+                    );
                 if (user != null)
                 {
                     await Authenticate(user);
-                    
-                    return RedirectToAction("Index","Home");
+
+                    return RedirectToAction("Index", "Home");
                 }
+
                 ModelState.AddModelError("", "Incorrect name or password");
             }
 
@@ -53,6 +54,7 @@ namespace LawyerTimeTracker.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -72,16 +74,15 @@ namespace LawyerTimeTracker.Controllers
 
                     databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
- 
-                    await Authenticate(user);
- 
-                    return RedirectToAction("Index", "Home");
+                    // TODO: oleksiii: write message 'User registered successfully'
+                    return RedirectToAction("ViewUsers", "Home");
                 }
                 else
                 {
                     ModelState.AddModelError("", "The user with this nickname has already existed.");
                 }
             }
+
             return View(model);
         }
 
@@ -89,14 +90,14 @@ namespace LawyerTimeTracker.Controllers
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Name),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims,
                 "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
-        
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
