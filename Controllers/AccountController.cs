@@ -62,7 +62,7 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Regex.IsMatch(model.Email, @"\w+\@\D+\.\D+"))
+                if (Regex.IsMatch(model.Email, @"\w+\@\D+\.\D+$"))
                 {
                     User userByEmail = await databaseContext.Users
                         .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
