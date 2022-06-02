@@ -5,6 +5,9 @@ namespace LawyerTimeTracker.ViewModels
     public class RegisterModel
     {
         //validation need to move to the client-side
+        [Required(ErrorMessage = "Not specified email")]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "Not specified name")]
         public string Name { get; set; }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.ViewModels;
@@ -61,25 +62,42 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await databaseContext.Users
-                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
-                if (user == null)
+                if (Regex.IsMatch(model.Email, @"\w+\@\D+\.\D+"))
                 {
-                    user = new User {Name = model.Name, Password = model.Password};
-                    Role userRole = await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
-                    if (userRole != null)
+                    User userByEmail = await databaseContext.Users
+                        .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
+                    if (userByEmail == null)
                     {
-                        user.Role = userRole;
-                    }
+                        User userByName = await databaseContext.Users
+                            .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
+                        if (userByName == null)
+                        {
+                            userByName = new User { Email = model.Email, Name = model.Name, Password = model.Password };
+                            Role userRole =
+                                await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                            if (userRole != null)
+                            {
+                                userByName.Role = userRole;
+                            }
 
-                    databaseContext.Users.Add(user);
-                    await databaseContext.SaveChangesAsync();
-                    // TODO: oleksiii: write message 'User registered successfully'
-                    return RedirectToAction("ViewUsers", "Home");
+                            databaseContext.Users.Add(userByName);
+                            await databaseContext.SaveChangesAsync();
+                            // TODO: oleksiii: write message 'User registered successfully'
+                            return RedirectToAction("ViewUsers", "Home");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "The user with this nickname already exists.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "The user with this email already exists.");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user with this nickname has already existed.");
+                    ModelState.AddModelError("", "Wrong email form.");
                 }
             }
 
