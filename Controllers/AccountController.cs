@@ -34,7 +34,7 @@ namespace LawyerTimeTracker.Controllers
                 User user = await databaseContext.Users
                     .Include(userInDatabase => userInDatabase.Role)
                     .FirstOrDefaultAsync(userInDatabase =>
-                        userInDatabase.Name == model.Name && userInDatabase.Password == model.Password
+                        userInDatabase.Email == model.Email && userInDatabase.Password == model.Password
                     );
                 if (user != null)
                 {
