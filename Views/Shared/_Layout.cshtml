@@ -1,13 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - LawyerTimeTracker</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
-</head>
-<body>
+﻿@{
+    Layout = "_LayoutBase";
+}
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -39,10 +33,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ViewUsers">View Users</a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Add User</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Add Users</a>
                             </li>
                         }
                     }
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="MyTasks">Tasks</a>
+                    </li>
                     <li>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
                     </li>
@@ -62,9 +59,3 @@
         &copy; 2022 - LawyerTimeTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
