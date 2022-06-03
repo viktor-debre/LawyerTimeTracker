@@ -29,7 +29,10 @@ namespace LawyerTimeTracker.Models
             
             User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
             
-            Issue firstTask = new Issue {Id = 1, Title = "Test issue 1", TypeOfTask = "Lawyer documentation", UserId = 1};
+            Issue firstTask = new Issue
+            {
+                Id = 1, Title = "Test issue 1", TypeOfTask = "Lawyer documentation", UserId = 1
+            };
             Issue secondTask = new Issue
             {
                 Id = 2, Title = "Test issue 2", TypeOfTask = "Lawyer documentation", UserId = 1,
@@ -38,12 +41,16 @@ namespace LawyerTimeTracker.Models
             Issue thirdTask = new Issue
             {
                 Id = 3, Title = "Test issue 3", TypeOfTask = "Lawyer documentation", UserId = 1,
-                StartTime = DateTime.Now, EndTime = DateTime.Now
+                StartTime = DateTime.Now, EndTime = DateTime.Now.AddMinutes(30)
+            };
+            Issue fifthTask = new Issue
+            {
+                Id = 4, Title = "Test issue 4", TypeOfTask = "Lawyer documentation", UserId = 1
             };
             
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
-            modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask });
+            modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask, fifthTask });
             base.OnModelCreating(modelBuilder);
         }
     }
