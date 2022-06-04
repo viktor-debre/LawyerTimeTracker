@@ -64,30 +64,20 @@ namespace LawyerTimeTracker.Controllers
             {
                 if (Regex.IsMatch(model.Email, @"\w+\@\D+\.\D+$"))
                 {
-                    User userByEmail = await databaseContext.Users
+                    User user = await databaseContext.Users
                         .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
-                    if (userByEmail == null)
+                    if (user == null)
                     {
-                        User userByName = await databaseContext.Users
-                            .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
-                        if (userByName == null)
+                        Role userRole =
+                            await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                        if (userRole != null)
                         {
-                            userByName = new User { Email = model.Email, Name = model.Name, Password = model.Password };
-                            Role userRole =
-                                await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
-                            if (userRole != null)
-                            {
-                                userByName.Role = userRole;
-                            }
+                            user.Role = userRole;
+                        }
 
-                            databaseContext.Users.Add(userByName);
-                            await databaseContext.SaveChangesAsync();
-                            return RedirectToAction("ViewUsers", "Home");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", "The user with this nickname already exists.");
-                        }
+                        databaseContext.Users.Add(user);
+                        await databaseContext.SaveChangesAsync();
+                        return RedirectToAction("ViewUsers", "Home");
                     }
                     else
                     {
