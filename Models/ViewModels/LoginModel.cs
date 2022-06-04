@@ -8,7 +8,6 @@ namespace LawyerTimeTracker.ViewModels
         [Required(ErrorMessage = "Not specified name")]
         public string Email { get; set; }
         
-        // TODO: oleksiii: decide will we use authorization on email + username
         // [Required(ErrorMessage = "Not specified name")]
         // public string Name { get; set; }
 

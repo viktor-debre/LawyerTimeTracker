@@ -82,7 +82,6 @@ namespace LawyerTimeTracker.Controllers
 
                             databaseContext.Users.Add(userByName);
                             await databaseContext.SaveChangesAsync();
-                            // TODO: oleksiii: write message 'User registered successfully'
                             return RedirectToAction("ViewUsers", "Home");
                         }
                         else
