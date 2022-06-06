@@ -20,18 +20,6 @@ namespace LawyerTimeTracker.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [Authorize]
         public IActionResult Help()
         {
             return View();

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.ViewModels;
@@ -41,7 +40,7 @@ namespace LawyerTimeTracker.Controllers
                 {
                     await Authenticate(user);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MyTasks", "Task");
                 }
 
                 ModelState.AddModelError("", "Incorrect name or password");
