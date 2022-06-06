@@ -4,9 +4,15 @@
 }
 
 <table class="table">
-    <tr><td>Name</td></tr>
+    <tr>
+        <td>Email</td><td>First name</td><td>Last name</td>
+    </tr>
     @foreach (var item in Model)
     {
-        <tr><td>@item.Name</td></tr>
+        string firstName = String.IsNullOrEmpty(item.FirstName) ? "<Не указано>" : item.FirstName;
+        string lastName = String.IsNullOrEmpty(item.LastName) ? "<Не указано>" : item.LastName;
+        <tr>
+            <td>@item.Email</td><td>@firstName</td><td>@lastName</td>
+        </tr>
     }
 </table>

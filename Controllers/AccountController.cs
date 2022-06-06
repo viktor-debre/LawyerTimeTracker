@@ -65,6 +65,11 @@ namespace LawyerTimeTracker.Controllers
                     .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
                 if (user == null)
                 {
+                    user = new User
+                    {
+                        Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,
+                        Password = model.Password
+                    };
                     Role userRole =
                         await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
                     if (userRole != null)
@@ -89,7 +94,7 @@ namespace LawyerTimeTracker.Controllers
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.FirstName + " " + user.LastName),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims,

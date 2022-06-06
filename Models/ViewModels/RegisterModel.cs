@@ -7,9 +7,9 @@ namespace LawyerTimeTracker.ViewModels
         //validation need to move to the client-side
         [Required(ErrorMessage = "Not specified email")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Not specified name")]
-        public string Name { get; set; }
+        
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
         [Required(ErrorMessage = "Not specified password")]
         [DataType(DataType.Password)]
