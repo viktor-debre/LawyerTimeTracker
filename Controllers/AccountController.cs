@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.ViewModels;
@@ -34,7 +35,7 @@ namespace LawyerTimeTracker.Controllers
                 User user = await databaseContext.Users
                     .Include(userInDatabase => userInDatabase.Role)
                     .FirstOrDefaultAsync(userInDatabase =>
-                        userInDatabase.Name == model.Name && userInDatabase.Password == model.Password
+                        userInDatabase.Email == model.Email && userInDatabase.Password == model.Password
                     );
                 if (user != null)
                 {
@@ -62,11 +63,11 @@ namespace LawyerTimeTracker.Controllers
             if (ModelState.IsValid)
             {
                 User user = await databaseContext.Users
-                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Name == model.Name);
+                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
                 if (user == null)
                 {
-                    user = new User {Name = model.Name, Password = model.Password};
-                    Role userRole = await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                    Role userRole =
+                        await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
                     if (userRole != null)
                     {
                         user.Role = userRole;
@@ -74,12 +75,11 @@ namespace LawyerTimeTracker.Controllers
 
                     databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
-                    // TODO: oleksiii: write message 'User registered successfully'
                     return RedirectToAction("ViewUsers", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user with this nickname has already existed.");
+                    ModelState.AddModelError("", "The user with this email already exists.");
                 }
             }
 
