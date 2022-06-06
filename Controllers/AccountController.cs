@@ -62,31 +62,24 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Regex.IsMatch(model.Email, @"\w+\@\D+\.\D+$"))
+                User user = await databaseContext.Users
+                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
+                if (user == null)
                 {
-                    User user = await databaseContext.Users
-                        .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
-                    if (user == null)
+                    Role userRole =
+                        await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                    if (userRole != null)
                     {
-                        Role userRole =
-                            await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
-                        if (userRole != null)
-                        {
-                            user.Role = userRole;
-                        }
+                        user.Role = userRole;
+                    }
 
-                        databaseContext.Users.Add(user);
-                        await databaseContext.SaveChangesAsync();
-                        return RedirectToAction("ViewUsers", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "The user with this email already exists.");
-                    }
+                    databaseContext.Users.Add(user);
+                    await databaseContext.SaveChangesAsync();
+                    return RedirectToAction("ViewUsers", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Wrong email form.");
+                    ModelState.AddModelError("", "The user with this email already exists.");
                 }
             }
 
