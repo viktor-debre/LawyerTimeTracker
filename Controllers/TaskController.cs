@@ -28,11 +28,5 @@ namespace LawyerTimeTracker.Controllers
         {
             return PartialView(issues);
         }
-        
-        [HttpPost]
-        public async Task<IActionResult> SingleIssue(Issue issue)
-        {
-            return PartialView(issue);
-        }
     }
 }
