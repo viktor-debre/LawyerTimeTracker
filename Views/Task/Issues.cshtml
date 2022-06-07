@@ -1,0 +1,22 @@
+@model List<Issue>
+
+@{
+    var issues = Model;
+}
+
+@foreach (var issue in issues)
+{
+    <div id="task_@issue.Id" name="task_link" data-fancybox data-src="#form_@issue.Id" href="javascript:">
+        <div class="board-column-issue">
+            <div class="board-column-issue-title">@issue.Title</div>
+        </div>
+    </div>
+    
+    <form id="form_@issue.Id" th:fragment="login" class="issue">
+        <div id="title" class="board-column-issue-title">@issue.Title</div>
+        <div class="board-column-issue-item">@issue.Description</div>
+        <div class="board-column-issue-item">@issue.TypeOfTask</div>
+        <div class="board-column-issue-item">Start time: @issue.StartTime</div>
+        <div class="board-column-issue-item">End time: @issue.EndTime</div>
+    </form>
+}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
@@ -20,6 +21,12 @@ namespace LawyerTimeTracker.Controllers
         public async Task<IActionResult> MyTasks()
         {
             return View(await databaseContext.Issues.ToListAsync());
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Issues(List<Issue> issues)
+        {
+            return PartialView(issues);
         }
     }
 }
