@@ -21,13 +21,14 @@ namespace LawyerTimeTracker.Models
             string adminRoleName = "admin";
             string userRoleName = "user";
 
+            string adminEmail = "dev@nure.ua";
             string adminName = "Viktor";
             string adminPassword = "123456";
             
             Role adminRole = new Role { Name = adminRoleName }; 
             Role userRole = new Role { Name = userRoleName };
             
-            User adminUser = new User { Id = 1, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
+            User adminUser = new User { Id = 1, Email = adminEmail, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
             
             Issue firstTask = new Issue
             {
