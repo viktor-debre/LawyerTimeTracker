@@ -20,7 +20,11 @@ namespace LawyerTimeTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> MyTasks()
         {
-            return View(await databaseContext.Issues.ToListAsync());
+            var currentUserId = databaseContext.Users.Find(User.Identity.Name).Id;
+            var userTasks = await databaseContext.Issues
+                .Where(i => i.UserId == currentUserId)
+                .ToListAsync();
+            return View(userTasks);
         }
         
         [HttpPost]
