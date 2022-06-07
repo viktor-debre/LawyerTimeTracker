@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
@@ -19,11 +20,11 @@ namespace LawyerTimeTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> MyTasks()
         {
-            ViewBag.AuthorizedUser = await databaseContext.Users
+            User currentUser = await databaseContext.Users
                 .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
-            var currentUserId = databaseContext.Users.Find(User.Identity.Name).Id;
+            ViewBag.AuthorizedUser = currentUser;
             var userTasks = await databaseContext.Issues
-                .Where(i => i.UserId == currentUserId)
+                .Where(i => i.UserId == currentUser.Id)
                 .ToListAsync();
             return View(userTasks);
         }
