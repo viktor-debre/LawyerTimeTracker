@@ -20,19 +20,25 @@ namespace LawyerTimeTracker.Controllers
         }
 
         [Authorize]
-        public IActionResult Help()
+        public async Task<IActionResult> Help()
         {
+            ViewBag.AuthorizedUser = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
             return View();
         }
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUsers()
         {
+            ViewBag.AuthorizedUser = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
             return View(await databaseContext.Users.ToListAsync());
         }
 
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
+            ViewBag.AuthorizedUser = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
             return View();
         }
 

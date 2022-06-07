@@ -50,8 +50,10 @@ namespace LawyerTimeTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            ViewBag.AuthorizedUser = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
             return View();
         }
 
@@ -94,7 +96,7 @@ namespace LawyerTimeTracker.Controllers
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.FirstName + " " + user.LastName),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims,
