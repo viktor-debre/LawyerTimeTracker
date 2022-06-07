@@ -24,19 +24,23 @@ namespace LawyerTimeTracker.Models
             string adminEmail = "dev@nure.ua";
             string adminName = "Viktor";
             string adminPassword = "123456";
+            string adminEmail2 = "d";
+            string adminName2 = "Ukrlan";
+            string adminPassword2 = "1";
             
             Role adminRole = new Role { Name = adminRoleName }; 
             Role userRole = new Role { Name = userRoleName };
             
             User adminUser = new User { Id = 1, Email = adminEmail, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
-            
+            User adminUser2 = new User { Id = 2, Email = adminEmail2, Name = adminName2, Password = adminPassword2, RoleName = adminRole.Name };
+
             Issue firstTask = new Issue
             {
                 Id = 1, Title = "Test issue 1", TypeOfTask = "Lawyer documentation", UserId = 1
             };
             Issue secondTask = new Issue
             {
-                Id = 2, Title = "Test issue 2", TypeOfTask = "Lawyer documentation", UserId = 1,
+                Id = 2, Title = "Test issue 2", TypeOfTask = "Lawyer documentation", UserId = 2,
                 StartTime = DateTime.Now
             };
             Issue thirdTask = new Issue
@@ -50,7 +54,7 @@ namespace LawyerTimeTracker.Models
             };
             
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
-            modelBuilder.Entity<User>().HasData(new User[] { adminUser });
+            modelBuilder.Entity<User>().HasData(new User[] { adminUser, adminUser2 });
             modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask, fifthTask });
             base.OnModelCreating(modelBuilder);
         }
