@@ -21,7 +21,19 @@ namespace LawyerTimeTracker.Controllers
         {
             ViewBag.AuthorizedUser = await databaseContext.Users
                 .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
-            return View(await databaseContext.Issues.ToListAsync());
+            var currentUserId = databaseContext.Users.Find(User.Identity.Name).Id;
+            var userTasks = await databaseContext.Issues
+                .Where(i => i.UserId == currentUserId)
+                .ToListAsync();
+            return View(userTasks);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Issues(List<Issue> issues)
+        {
+            ViewBag.AuthorizedUser = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
+            return PartialView(issues);
         }
     }
 }
