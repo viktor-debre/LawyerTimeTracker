@@ -29,13 +29,18 @@
                             </li>
                         }
                     }
-                    <li>
-                        <a class="nav-link text-dark username" asp-area="" asp-controller="Home" asp-action="GetProfile">@displayName</a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
-                    </li>
                 </ul>
+                <div class="user-actions">
+                    <ul>
+                        <a class="text-dark user-action-title">@displayName</a>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetProfile">My Profile</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
