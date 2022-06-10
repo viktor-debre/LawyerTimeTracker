@@ -12,12 +12,10 @@ namespace LawyerTimeTracker.Controllers
 {
     public class AccountController : Controller
     {
-        // private ApplicationContext databaseContext;
         private AccountService _service;
 
         public AccountController(ApplicationContext context)
         {
-            // databaseContext = context;
             _service = new AccountService(context);
         }
 
