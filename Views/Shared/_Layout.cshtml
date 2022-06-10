@@ -2,7 +2,6 @@
     Layout = "_LayoutBase";
     User authorizedUser = ViewBag.AuthorizedUser;
     string displayName = authorizedUser.FirstName + " " + authorizedUser.LastName;
-    displayName = String.IsNullOrEmpty((authorizedUser.FirstName + " " + authorizedUser.LastName).Trim()) ? authorizedUser.Email : displayName;
 }
 
 <header>

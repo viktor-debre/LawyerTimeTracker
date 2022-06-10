@@ -2,21 +2,23 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.Services;
 using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
     public class AccountController : Controller
     {
-        private ApplicationContext databaseContext;
+        // private ApplicationContext databaseContext;
+        private AccountService _service;
 
         public AccountController(ApplicationContext context)
         {
-            databaseContext = context;
+            // databaseContext = context;
+            _service = new AccountService(context);
         }
 
         [HttpGet]
@@ -31,11 +33,7 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await databaseContext.Users
-                    .Include(userInDatabase => userInDatabase.Role)
-                    .FirstOrDefaultAsync(userInDatabase =>
-                        userInDatabase.Email == model.Email && userInDatabase.Password == model.Password
-                    );
+                User user = await _service.GetUserByEmailAndPassword(model.Email, model.Password);
                 if (user != null)
                 {
                     await Authenticate(user);
@@ -52,8 +50,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            ViewBag.AuthorizedUser = await databaseContext.Users
-                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == User.Identity.Name);
+            ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
             return View();
         }
 
@@ -61,10 +58,10 @@ namespace LawyerTimeTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
+            ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
             if (ModelState.IsValid)
             {
-                User user = await databaseContext.Users
-                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
+                User user = await _service.GetUserByEmail(model.Email);
                 if (user == null)
                 {
                     user = new User
@@ -72,15 +69,13 @@ namespace LawyerTimeTracker.Controllers
                         Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,
                         Password = model.Password
                     };
-                    Role userRole =
-                        await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
+                    Role userRole = await _service.GetRoleByName("user");
                     if (userRole != null)
                     {
                         user.Role = userRole;
                     }
 
-                    databaseContext.Users.Add(user);
-                    await databaseContext.SaveChangesAsync();
+                    await _service.SaveUser(user);
                     return RedirectToAction("ViewUsers", "Home");
                 }
                 else

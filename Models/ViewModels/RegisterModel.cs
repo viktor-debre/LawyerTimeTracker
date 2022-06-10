@@ -8,8 +8,11 @@ namespace LawyerTimeTracker.ViewModels
         [Required(ErrorMessage = "Not specified email")]
         public string Email { get; set; }
         
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        [Required(ErrorMessage = "Not specified first name")]
+        public string FirstName { get; set; }
+        
+        [Required(ErrorMessage = "Not specified last name")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Not specified password")]
         [DataType(DataType.Password)]
