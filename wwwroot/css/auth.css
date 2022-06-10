@@ -1,0 +1,88 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+body{
+    font-family: 'Manrope', sans-serif;
+    background: linear-gradient(to bottom right, rgb(116, 116, 243), rgb(191, 154, 160));
+    background-repeat:no-repeat
+}
+
+input[type=text], #password-style{
+    border: 2px solid rgb(62, 34, 163);
+    border-radius: 14px;
+    margin: 5px;
+    background: linear-gradient(to bottom right, rgb(116, 116, 243), pink);;
+}
+input[type=text]:focus, #password-style:focus{
+    border: 2px solid #e0a800;
+    box-shadow: 10px 5px 5px orange;
+}
+
+input[type=submit]{
+    border: 2px solid rgb(62, 34, 163);
+    border-radius: 100px;
+    margin: 5px;
+    background: linear-gradient(to bottom right, rgb(192, 192, 201), pink);;
+}
+
+input[type=submit]:hover{
+    background: linear-gradient(to bottom right, rgb(160, 243, 243), pink);;
+}
+
+#input-reg{
+    margin-left: auto;
+    margin-right: auto;
+    width: 12em;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    /* justify-content: space-around; */
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 1.2em;
+    padding-bottom: 20px;
+
+}
