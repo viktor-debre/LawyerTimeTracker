@@ -39,6 +39,7 @@ namespace LawyerTimeTracker.Controllers
                     );
                 if (user != null)
                 {
+                    
                     await Authenticate(user);
 
                     return RedirectToAction("Index", "Home");
@@ -66,13 +67,17 @@ namespace LawyerTimeTracker.Controllers
                     .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
                 if (user == null)
                 {
-                    Role userRole =
+                    Role userRole = 
                         await databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == "user");
                     if (userRole != null)
                     {
                         user.Role = userRole;
                     }
 
+                    user.Email = model.Email;
+                    user.Name = model.Name;
+                    user.Password = model.Password;
+                    
                     databaseContext.Users.Add(user);
                     await databaseContext.SaveChangesAsync();
                     return RedirectToAction("ViewUsers", "Home");

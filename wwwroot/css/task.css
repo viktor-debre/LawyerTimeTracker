@@ -1,3 +1,43 @@
 .issue {
     display: none;
+    font-size: 30px;
+}
+
+.board {
+    display: flex;
+    padding: 31px;
+    width: 700px;
+    background: #97d1e1;
+    border-radius: 38px;
+    justify-content: center;
+}
+
+.board *{
+    font-family: sans-serif;
+}
+
+.board-column {
+    flex: 1;
+}
+
+.board-column:not(:last-child){
+    margin-right: -3px;
+    border: 2px black;
+    border: solid;
+}
+
+.board-column-title {
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: #080808;
+    text-align: center;
+
+}
+
+.board-column-issue {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
 }
