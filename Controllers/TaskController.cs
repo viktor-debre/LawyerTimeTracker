@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +14,12 @@ namespace LawyerTimeTracker.Controllers
     {
         private ApplicationContext databaseContext;
         private AccountService _accountService;
+        private TaskService _taskService;
         public TaskController(ApplicationContext context)
         {
             databaseContext = context;
             _accountService = new AccountService(context);
+            _taskService = new TaskService(context);
         }
         
         [Authorize]
@@ -36,6 +39,24 @@ namespace LawyerTimeTracker.Controllers
         {
             ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return PartialView(issues);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> StartTask(int id)
+        {
+            Issue currentIssue = await _taskService.GetTaskById(id);
+            currentIssue.StartTime = DateTime.Now;
+            await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> EndTask(int id)
+        {
+            Issue currentIssue = await _taskService.GetTaskById(id);
+            currentIssue.EndTime = DateTime.Now;
+            await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
         }
     }
 }
