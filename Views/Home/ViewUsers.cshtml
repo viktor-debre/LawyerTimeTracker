@@ -4,9 +4,13 @@
 }
 
 <table class="table">
-    <tr><td>Name</td></tr>
+    <tr>
+        <td>Email</td><td>First name</td><td>Last name</td>
+    </tr>
     @foreach (var item in Model)
     {
-        <tr><td>@item.Name</td></tr>
+        <tr>
+            <td>@item.Email</td><td>@item.FirstName</td><td>@item.LastName</td>
+        </tr>
     }
 </table>

@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace LawyerTimeTracker.Controllers
@@ -11,40 +11,31 @@ namespace LawyerTimeTracker.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private ApplicationContext databaseContext;
-
+        private AccountService _accountService;
+        
         public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
-            databaseContext = context;
+            _accountService = new AccountService(context);
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Help()
         {
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult Help()
-        {
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return View();
         }
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUsers()
         {
-            return View(await databaseContext.Users.ToListAsync());
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
+            return View(await _accountService.GetUsers());
         }
 
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return View();
         }
 
