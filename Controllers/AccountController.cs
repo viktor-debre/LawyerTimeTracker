@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Services;
@@ -8,13 +7,12 @@ using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
     public class AccountController : Controller
     {
-        private ApplicationContext databaseContext;
+        private AccountService _service;
 
         public AccountController(ApplicationContext context)
         {
@@ -48,7 +46,7 @@ namespace LawyerTimeTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
             return View();
@@ -61,8 +59,7 @@ namespace LawyerTimeTracker.Controllers
             ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
             if (ModelState.IsValid)
             {
-                User user = await databaseContext.Users
-                    .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == model.Email);
+                User user = await _service.GetUserByEmail(model.Email);
                 if (user == null)
                 {
                     user = new User
