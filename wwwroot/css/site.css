@@ -21,26 +21,6 @@ a {
     border-color: #1861ac;
 }
 
-.user-actions {
-    cursor: pointer;
-    margin-right: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.user-actions ul {
-    list-style: none;
-}
-
-.user-actions li {
-    display: none;
-}
-
-.user-actions:hover li{
-    display: list-item;
-}
-
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
