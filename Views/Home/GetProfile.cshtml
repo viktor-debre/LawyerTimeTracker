@@ -1,5 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Profile information";
+    User authorizedUser = ViewBag.AuthorizedUser;
 }
 <h1>@ViewData["Title"]</h1>
-<h2>Username - @User.Identity.Name</h2>
+<h2>First name - @authorizedUser.FirstName</h2>
+<h2>Last name - @authorizedUser.LastName</h2>
+<h3>Email - @authorizedUser.Email</h3>
+@{
+    if(authorizedUser.Organization != null)
+    {
+        <h3>Organization - @authorizedUser.Organization.Name</h3>
+    }
+}

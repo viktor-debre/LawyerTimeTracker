@@ -22,17 +22,20 @@ namespace LawyerTimeTracker.Models
             string userRoleName = "user";
 
             string adminEmail = "dev@nure.ua";
-            string adminName = "Viktor";
+            string adminFirstName = "Viktor";
+            string adminLastName = "Ivanov";
             string adminPassword = "123456";
             string adminEmail2 = "d";
-            string adminName2 = "Ukrlan";
+            string adminFirstName2 = "Ukrlan";
+            string adminLastName2 = "Sparrow";
             string adminPassword2 = "1";
             
             Role adminRole = new Role { Name = adminRoleName }; 
             Role userRole = new Role { Name = userRoleName };
             
-            User adminUser = new User { Id = 1, Email = adminEmail, Name = adminName, Password = adminPassword, RoleName = adminRole.Name };
-            User adminUser2 = new User { Id = 2, Email = adminEmail2, Name = adminName2, Password = adminPassword2, RoleName = adminRole.Name };
+            User adminUser = new User { Id = 1, Email = adminEmail, FirstName = adminFirstName, LastName = adminLastName, Password = adminPassword, RoleName = adminRole.Name };
+            
+            User adminUser2 = new User { Id = 2, Email = adminEmail2, FirstName = adminFirstName2, LastName = adminLastName2, Password = adminPassword2, RoleName = adminRole.Name };
 
             Issue firstTask = new Issue
             {
