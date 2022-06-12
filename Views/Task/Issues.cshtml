@@ -19,12 +19,18 @@
         <div class="board-column-issue-item">Start time: @issue.StartTime</div>
         <div class="board-column-issue-item">End time: @issue.EndTime</div>
         <div>
-            <form asp-action="StartTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
-                <input type="submit" value="Start"/>
-            </form>
-            <form asp-action="EndTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
-                <input type="submit" value="End"/>
-            </form>
+            @if (issue.StartTime == null)
+            {
+                <form asp-action="StartTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
+                    <input type="submit" value="Start"/>
+                </form>
+            }
+            @if (issue.EndTime == null && issue.StartTime != null)
+            {
+                <form asp-action="EndTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
+                    <input type="submit" value="End"/>
+                </form>
+            }
         </div>
     </div>
 }
