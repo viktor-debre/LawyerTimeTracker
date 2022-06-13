@@ -23,8 +23,14 @@ namespace LawyerTimeTracker.Services
             databaseContext.Issues.Update(issue);
             await databaseContext.SaveChangesAsync();
         }
-
-        public async Task AddTask(NewTaskModel newTask, int userId)
+        
+        public async Task DeleteTask(int id)
+        {
+            databaseContext.Issues.Remove(GetTaskById(id).Result);
+            await databaseContext.SaveChangesAsync();
+        }
+        
+        public async Task AddTaskForUser(NewTaskModel newTask, int userId)
         {
             Issue issue = new Issue
             {

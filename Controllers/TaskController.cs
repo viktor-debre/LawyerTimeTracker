@@ -66,11 +66,35 @@ namespace LawyerTimeTracker.Controllers
             ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return PartialView();
         }
-
+        
         public async Task<IActionResult> NewTask(NewTaskModel newTask)  
         {
             User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
-            await _taskService.AddTask(newTask, currentUser.Id);
+            await _taskService.AddTaskForUser(newTask, currentUser.Id);
+            return RedirectToAction("MyTasks", "Task");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> SingleIssue(NewTaskModel issue)
+        {
+            return PartialView(issue);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateTask(NewTaskModel issue)
+        {
+            Issue currentIssue = await _taskService.GetTaskById(issue.Id);
+            currentIssue.Title = issue.Title;
+            currentIssue.Description = issue.Description;
+            currentIssue.TypeOfTask = issue.TypeOfTask;
+            await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTask(int id)
+        {
+            await _taskService.DeleteTask(id);
             return RedirectToAction("MyTasks", "Task");
         }
     }
