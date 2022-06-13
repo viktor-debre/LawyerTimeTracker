@@ -67,6 +67,7 @@ namespace LawyerTimeTracker.Controllers
             return PartialView();
         }
         
+        [HttpPost]
         public async Task<IActionResult> NewTask(NewTaskModel newTask)  
         {
             User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
