@@ -29,8 +29,9 @@ namespace LawyerTimeTracker.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ViewUsers()
         {
-            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
-            return View(await _accountService.GetUsers());
+            User currentAdmin = await _accountService.GetUserByEmail(User.Identity.Name);
+            ViewBag.AuthorizedUser = currentAdmin;
+            return View(await _accountService.GetUsersFromOrganization(currentAdmin.OrganizationId));
         }
 
         public async Task<IActionResult> GetProfile()

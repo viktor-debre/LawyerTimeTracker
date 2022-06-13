@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.ViewModels;
@@ -27,10 +28,23 @@ namespace LawyerTimeTracker.Services
             return await databaseContext.Users.ToListAsync();
         }
 
+        public async Task<List<User>> GetUsersFromOrganization(int organizationId)
+        {
+            return await databaseContext.Users.Where(userInDb => userInDb.OrganizationId == organizationId)
+                .ToListAsync();
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
-            return databaseContext.Users
-                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == email).Result;
+            User user = await databaseContext.Users
+                .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == email);
+            if (user != null)
+            {
+                user.Organization = await databaseContext.Organizations
+                    .FirstOrDefaultAsync(organization => organization.Id == user.OrganizationId);
+            }
+
+            return user;
         }
 
         public async Task<User> GetUserByEmailAndPassword(string email, string password)
