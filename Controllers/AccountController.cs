@@ -6,6 +6,7 @@ using LawyerTimeTracker.Services;
 using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LawyerTimeTracker.Controllers
@@ -54,31 +55,17 @@ namespace LawyerTimeTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
+            User currentAdmin = await _service.GetUserByEmail(User.Identity.Name);
+            ViewBag.AuthorizedUser = currentAdmin;
             if (ModelState.IsValid)
             {
-                User user = await _service.GetUserByEmail(model.Email);
-                if (user == null)
+                await _service.RegisterUser(currentAdmin, model, ModelState);
+                if (ModelState.Root.Errors.Count == 0)
                 {
-                    user = new User
-                    {
-                        Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,
-                        Password = model.Password
-                    };
-                    Role userRole = await _service.GetRoleByName("user");
-                    if (userRole != null)
-                    {
-                        user.Role = userRole;
-                    }
-
-                    await _service.SaveUser(user);
                     return RedirectToAction("ViewUsers", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The user with this email already exists.");
                 }
             }
 

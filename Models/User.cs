@@ -9,6 +9,7 @@ namespace LawyerTimeTracker.Models
         public string Password { get; set; }
         public string RoleName { get; set; }
         public Role Role { get; set; }
+        public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
     }
 }
