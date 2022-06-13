@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Services;
+using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,20 @@ namespace LawyerTimeTracker.Controllers
             Issue currentIssue = await _taskService.GetTaskById(id);
             currentIssue.EndTime = DateTime.Now;
             await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> NewIssue(NewTaskModel newTask)
+        {
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
+            return PartialView();
+        }
+
+        public async Task<IActionResult> NewTask(NewTaskModel newTask)  
+        {
+            User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
+            await _taskService.AddTask(newTask, currentUser.Id);
             return RedirectToAction("MyTasks", "Task");
         }
     }

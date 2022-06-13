@@ -1,0 +1,26 @@
+@model LawyerTimeTracker.ViewModels.NewTaskModel
+
+<div id="add-new-task-button" name="task_link" data-fancybox data-src="#add-new-task-form" href="javascript:">
+    <div class="task-form-button">Add new task</div>
+</div>
+<form id="add-new-task-form" class="add-new-task" asp-controller="Task" asp-action="NewTask">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div class="new-task-property">
+        <label asp-for="Title">Input title</label><br/>
+        <input type="text" asp-for="Title"/>
+        <span asp-validation-for="Title"/>
+    </div>
+    <div class="new-task-property">
+        <label asp-for="Description">Input description</label><br/>
+        <input type="text" asp-for="Description"/>
+        <span asp-validation-for="Description"/>
+    </div>
+    <div class="new-task-property">
+        <label asp-for="TypeOfTask">Input type of task</label><br/>
+        <input type="text" asp-for="TypeOfTask"/>
+        <span asp-validation-for="TypeOfTask"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add new task" class="add-new-task-form-button"/>
+    </div>
+</form>
