@@ -29,13 +29,23 @@ namespace LawyerTimeTracker.Models
             string adminFirstName2 = "Ukrlan";
             string adminLastName2 = "Sparrow";
             string adminPassword2 = "1";
-            
-            Role adminRole = new Role { Name = adminRoleName }; 
+
+            Role adminRole = new Role { Name = adminRoleName };
             Role userRole = new Role { Name = userRoleName };
-            
-            User adminUser = new User { Id = 1, Email = adminEmail, FirstName = adminFirstName, LastName = adminLastName, Password = adminPassword, RoleName = adminRole.Name };
-            
-            User adminUser2 = new User { Id = 2, Email = adminEmail2, FirstName = adminFirstName2, LastName = adminLastName2, Password = adminPassword2, RoleName = adminRole.Name };
+            Organization adminOrganization1 = new Organization { Id = 1, Name = "Google" };
+            Organization adminOrganization2 = new Organization { Id = 2, Name = "Amazon" };
+
+            User adminUser = new User
+            {
+                Id = 1, Email = adminEmail, FirstName = adminFirstName, LastName = adminLastName,
+                Password = adminPassword, RoleName = adminRole.Name, OrganizationId = adminOrganization1.Id
+            };
+
+            User adminUser2 = new User
+            {
+                Id = 2, Email = adminEmail2, FirstName = adminFirstName2, LastName = adminLastName2,
+                Password = adminPassword2, RoleName = adminRole.Name, OrganizationId = adminOrganization2.Id
+            };
 
             Issue firstTask = new Issue
             {
@@ -55,7 +65,8 @@ namespace LawyerTimeTracker.Models
             {
                 Id = 4, Title = "Test issue 4", TypeOfTask = "Lawyer documentation", UserId = 1
             };
-            
+
+            modelBuilder.Entity<Organization>().HasData(new Organization[] { adminOrganization1, adminOrganization2 });
             modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
             modelBuilder.Entity<User>().HasData(new User[] { adminUser, adminUser2 });
             modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask, fifthTask });

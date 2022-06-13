@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Services
@@ -29,7 +31,6 @@ namespace LawyerTimeTracker.Services
         {
             return databaseContext.Users
                 .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == email).Result;
-            ;
         }
 
         public async Task<User> GetUserByEmailAndPassword(string email, string password)
@@ -39,6 +40,31 @@ namespace LawyerTimeTracker.Services
                 .FirstOrDefaultAsync(userInDatabase =>
                     userInDatabase.Email == email && userInDatabase.Password == password
                 ).Result;
+        }
+
+        public async Task RegisterUser(User currentAdmin, RegisterModel model,
+            ModelStateDictionary modelState)
+        {
+            User user = await GetUserByEmail(model.Email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,
+                    Password = model.Password, OrganizationId = currentAdmin.OrganizationId
+                };
+                Role userRole = await GetRoleByName("user");
+                if (userRole != null)
+                {
+                    user.Role = userRole;
+                }
+
+                await SaveUser(user);
+            }
+            else
+            {
+                modelState.AddModelError("", "The user with this email already exists.");
+            }
         }
 
         public async Task<Role> GetRoleByName(string rolename)
