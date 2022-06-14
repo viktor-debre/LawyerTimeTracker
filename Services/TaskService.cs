@@ -7,7 +7,8 @@ namespace LawyerTimeTracker.Services
     public class TaskService
     {
         private ApplicationContext databaseContext;
-
+        private AccountService _accountService;
+        
         public TaskService(ApplicationContext context)
         {
             databaseContext = context;
@@ -30,8 +31,10 @@ namespace LawyerTimeTracker.Services
             await databaseContext.SaveChangesAsync();
         }
         
-        public async Task AddTaskForUser(NewTaskModel newTask, int userId)
+        public async Task AddTaskForUser(NewTaskModel newTask, string email)
         {
+            User currentUser = await _accountService.GetUserByEmail(email);
+            int userId = currentUser.Id;
             Issue issue = new Issue
             {
                 Title = newTask.Title,

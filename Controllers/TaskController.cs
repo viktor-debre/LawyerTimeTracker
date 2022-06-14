@@ -70,8 +70,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> NewTask(NewTaskModel newTask)  
         {
-            User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
-            await _taskService.AddTaskForUser(newTask, currentUser.Id);
+            await _taskService.AddTaskForUser(newTask, User.Identity.Name);
             return RedirectToAction("MyTasks", "Task");
         }
         
