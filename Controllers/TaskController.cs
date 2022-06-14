@@ -83,10 +83,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTask(NewTaskModel issue)
         {
-            Issue currentIssue = await _taskService.GetTaskById(issue.Id);
-            currentIssue.Title = issue.Title;
-            currentIssue.Description = issue.Description;
-            currentIssue.TypeOfTask = issue.TypeOfTask;
+            Issue currentIssue = await _taskService.DuplicateTask(issue);
             await _taskService.UpdateTask(currentIssue);
             return RedirectToAction("MyTasks", "Task");
         }

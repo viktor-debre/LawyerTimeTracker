@@ -25,6 +25,15 @@ namespace LawyerTimeTracker.Services
             await databaseContext.SaveChangesAsync();
         }
         
+        public async Task<Issue> DuplicateTask(NewTaskModel issue)
+        {
+            Issue currentIssue = await GetTaskById(issue.Id);
+            currentIssue.Title = issue.Title;
+            currentIssue.Description = issue.Description;
+            currentIssue.TypeOfTask = issue.TypeOfTask;
+            return currentIssue;
+        }
+            
         public async Task DeleteTask(int id)
         {
             databaseContext.Issues.Remove(GetTaskById(id).Result);
