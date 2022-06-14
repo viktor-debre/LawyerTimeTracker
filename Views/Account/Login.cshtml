@@ -1,12 +1,11 @@
 @model LawyerTimeTracker.ViewModels.LoginModel
- @{  
-     Layout = "/Views/Shared/_LayoutBase.cshtml";  
- }
+@{  
+    Layout = "/Views/Shared/_LayoutBase.cshtml";  
+}
 <div class="login-form">
     <h2>Log in</h2>
 
     <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
-        <div class="validation" asp-validation-summary="ModelOnly"></div>
         <div id="input-reg">
             <div class="form-group">
                 <label asp-for="Email">Email</label>
@@ -22,5 +21,6 @@
                 <input type="submit" value="Log in" class="btn btn-outline-dark"/>
             </div>
         </div>
+        <div class="validation" asp-validation-summary="All"></div>
     </form>
 </div>

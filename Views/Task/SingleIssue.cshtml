@@ -1,18 +1,23 @@
 @model LawyerTimeTracker.ViewModels.NewTaskModel
 
+@{
+    var newIssue = Model;
+}
+
 <form asp-controller="Task" asp-action="UpdateTask">
-    <input type="number" asp-for="Id" readonly="true" style="display: none" value="@Model.Id"/>
+    <input type="number" asp-for="Id" readonly="true" style="display: none" value="@newIssue.Id"/>
     <label asp-for="Title">Title</label><br/>
-    <input type="text" asp-for="Title" class="board-column-issue-title" value="@Model.Title"/>
+    <input type="text" asp-for="Title" class="board-column-issue-title" value="@newIssue.Title"/>
     <label asp-for="Description">Description</label><br/>
-    <input type="text" asp-for="Description" name="description" class="board-column-issue-item" value="@Model.Description"/>
+    <input type="text" asp-for="Description" name="description" class="board-column-issue-item" value="@newIssue.Description"/>
     <label asp-for="TypeOfTask">Type of task</label><br/>
-    <input type="text" asp-for="TypeOfTask" name="typeOfTask" class="board-column-issue-item" value="@Model.TypeOfTask"/>
+    <input type="text" asp-for="TypeOfTask" name="typeOfTask" class="board-column-issue-item" value="@newIssue.TypeOfTask"/>
     <div class="form-group">
         <input type="submit" value="Update task" class="add-new-task-form-button"/>
     </div>
+    <div class="validation" asp-validation-summary="All"></div>
 </form>
-<form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@Model.Id">
+<form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@newIssue.Id">
     <div class="form-group">
         <input type="submit" value="Delete task" class="add-new-task-form-button"/>
     </div>

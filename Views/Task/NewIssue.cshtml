@@ -3,8 +3,7 @@
 <div id="add-new-task-button" name="task_link" data-fancybox data-src="#add-new-task-form" href="javascript:">
     <div class="task-form-button">Add new task</div>
 </div>
-<form id="add-new-task-form" class="add-new-task" asp-controller="Task" asp-action="NewTask">
-    <div class="validation" asp-validation-summary="ModelOnly"></div>
+<form id="add-new-task-form" class="add-new-task" asp-controller="Task" asp-action="NewTask"  asp-anti-forgery="true">
     <div class="new-task-property">
         <label asp-for="Title">Input title</label><br/>
         <input type="text" asp-for="Title"/>
@@ -23,4 +22,5 @@
     <div class="form-group">
         <input type="submit" value="Add new task" class="add-new-task-form-button"/>
     </div>
+    <div class="validation" asp-validation-summary="All"></div>
 </form>
