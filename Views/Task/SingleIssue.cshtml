@@ -5,17 +5,17 @@
 }
 
 <form asp-controller="Task" asp-action="UpdateTask">
-    <input type="number" asp-for="Id" readonly="true" style="display: none" value="@newIssue.Id"/>
+    <input type="number" asp-for="Id" id="id" readonly="true" style="display: none" value="@newIssue.Id"/>
     <label asp-for="Title">Title</label><br/>
-    <input type="text" asp-for="Title" class="board-column-issue-title" value="@newIssue.Title"/>
+    <input type="text" asp-for="Title" id="title" class="board-column-issue-title" value="@newIssue.Title"/>
     <label asp-for="Description">Description</label><br/>
-    <input type="text" asp-for="Description" name="description" class="board-column-issue-item" value="@newIssue.Description"/>
+    <input type="text" asp-for="Description" id="description" class="board-column-issue-item" value="@newIssue.Description"/>
     <label asp-for="TypeOfTask">Type of task</label><br/>
-    <input type="text" asp-for="TypeOfTask" name="typeOfTask" class="board-column-issue-item" value="@newIssue.TypeOfTask"/>
+    <input type="text" asp-for="TypeOfTask" id="typeOfTask" class="board-column-issue-item" value="@newIssue.TypeOfTask"/>
     <div class="form-group">
         <input type="submit" value="Update task" class="add-new-task-form-button"/>
     </div>
-    <div class="validation" asp-validation-summary="All"></div>
+    <div id="message" class="update-task-status"></div>
 </form>
 <form asp-controller="Task" asp-action="DeleteTask" asp-route-id="@newIssue.Id">
     <div class="form-group">
