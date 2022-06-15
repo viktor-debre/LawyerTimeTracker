@@ -45,15 +45,15 @@ table {
 
 body{
     font-family: 'Manrope', sans-serif;
-    background: linear-gradient(to bottom right, rgb(116, 116, 243), rgb(191, 154, 160));
-    background-repeat:no-repeat
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(110,220,255,1) 50%, rgba(0,177,213,1) 100%);
 }
 
 input[type=text], #password-style{
     border: 2px solid rgb(62, 34, 163);
     border-radius: 14px;
     margin: 5px;
-    background: linear-gradient(to bottom right, rgb(116, 116, 243), pink);;
+    background: deepskyblue;
 }
 input[type=text]:focus, #password-style:focus{
     border: 2px solid #e0a800;
@@ -64,7 +64,7 @@ input[type=submit]{
     border: 2px solid rgb(62, 34, 163);
     border-radius: 100px;
     margin: 5px;
-    background: linear-gradient(to bottom right, rgb(192, 192, 201), pink);;
+    background: deepskyblue;
 }
 
 input[type=submit]:hover{

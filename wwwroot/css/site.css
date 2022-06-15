@@ -27,11 +27,11 @@ html {
     font-size: 14px;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
+/*@media (min-width: 768px) {*/
+/*    html {*/
+/*        font-size: 16px;*/
+/*    }*/
+/*}*/
 
 .border-top {
     border-top: 1px solid #e5e5e5;
@@ -64,10 +64,15 @@ body {
 
 .footer {
     position: absolute;
+    display: flex;
+    justify-content: space-around;
     bottom: 0;
-    width: 100%;
+    width: 700px;
+    margin: auto;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 60px;
+    align-content: center;
+    flex-wrap: nowrap;
 }
 
 .login-form {
@@ -77,50 +82,4 @@ body {
     transform: translate(-50%, -50%);
     padding: 10px;
 }
-
-.board {
-  display: flex;
-  padding: 31px;
-  width: 700px;
-  background: #97d1e1;
-  border-radius: 38px;
-  justify-content: center;
-}
-
-.board * {
-    font-family: sans-serif;
-}
-
-.board-column {
-    flex: 1;
-}
-
-.board-column:not(:last-child){
-  margin-right: -3px;
-  border: 2px black;
-  border: solid;
-}
-
-.board-column-title {
-  margin-bottom: 20px;
-  font-size: 30px;
-  color: #080808;
-  text-align: center;
-  
-}
-
-.board-column-issue {
-    padding: 10px 15px;
-    box-sizing: border-box;
-    background: white;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.board-column-issue-title{
-  font-size: 20px;
-}
-
-.board-column-issue-item{
-  font-size: 16px;
-}
+.container{    text-align: center;}

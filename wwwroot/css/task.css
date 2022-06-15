@@ -18,6 +18,9 @@
 
 .board-column {
     flex: 1;
+    margin-right: -3px;
+    border: 2px black;
+    border: solid;
 }
 
 .board-column:not(:last-child){
@@ -36,8 +39,17 @@
 
 .board-column-issue {
     padding: 10px 15px;
+    margin: 10px;
     box-sizing: border-box;
     background: white;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.board-column-issue-title{
+    font-size: 20px;
+}
+
+.board-column-issue-item{
+    font-size: 16px;
 }
