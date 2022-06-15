@@ -70,8 +70,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> NewTask(NewTaskModel newTask)  
         {
-            User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
-            await _taskService.AddTaskForUser(newTask, currentUser.Id);
+            await _taskService.AddTaskForUser(newTask, User.Identity.Name);
             return RedirectToAction("MyTasks", "Task");
         }
         
@@ -84,10 +83,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTask(NewTaskModel issue)
         {
-            Issue currentIssue = await _taskService.GetTaskById(issue.Id);
-            currentIssue.Title = issue.Title;
-            currentIssue.Description = issue.Description;
-            currentIssue.TypeOfTask = issue.TypeOfTask;
+            Issue currentIssue = await _taskService.DuplicateTask(issue);
             await _taskService.UpdateTask(currentIssue);
             return RedirectToAction("MyTasks", "Task");
         }
