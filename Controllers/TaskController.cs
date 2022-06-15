@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Services;
+using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,41 @@ namespace LawyerTimeTracker.Controllers
             Issue currentIssue = await _taskService.GetTaskById(id);
             currentIssue.EndTime = DateTime.Now;
             await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> NewIssue(NewTaskModel newTask)
+        {
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
+            return PartialView();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> NewTask(NewTaskModel newTask)  
+        {
+            await _taskService.AddTaskForUser(newTask, User.Identity.Name);
+            return RedirectToAction("MyTasks", "Task");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> SingleIssue(NewTaskModel issue)
+        {
+            return PartialView(issue);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateTask(NewTaskModel issue)
+        {
+            Issue currentIssue = await _taskService.DuplicateTask(issue);
+            await _taskService.UpdateTask(currentIssue);
+            return RedirectToAction("MyTasks", "Task");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTask(int id)
+        {
+            await _taskService.DeleteTask(id);
             return RedirectToAction("MyTasks", "Task");
         }
     }
