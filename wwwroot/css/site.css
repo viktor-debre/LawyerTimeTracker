@@ -84,15 +84,14 @@ body {
 
 .footer {
     position: absolute;
-    display: flex;
-    justify-content: space-around;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     bottom: 0;
-    width: 700px;
-    margin: auto;
+    width: 70%;
     white-space: nowrap;
     line-height: 60px;
     align-content: center;
-    flex-wrap: nowrap;
 }
 
 .login-form {
@@ -102,4 +101,13 @@ body {
     transform: translate(-50%, -50%);
     padding: 10px;
 }
-.container{    text-align: center;}
+.container-footer{     
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+header{
+    border-radius: 0% 0% 30% 30%;
+}
