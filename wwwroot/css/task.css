@@ -53,3 +53,7 @@
 .board-column-issue-item{
     font-size: 16px;
 }
+
+.add-new-task {
+    display: none;
+}
