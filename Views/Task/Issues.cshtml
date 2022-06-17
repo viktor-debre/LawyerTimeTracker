@@ -23,13 +23,13 @@
         <div>
             @if (issue.StartTime == null)
             {
-                <form asp-action="StartTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
+                <form class="change-time-button" asp-action="StartTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
                     <input type="submit" value="Start"/>
                 </form>
             }
             @if (issue.EndTime == null && issue.StartTime != null)
             {
-                <form asp-action="EndTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
+                <form class="change-time-button" asp-action="EndTask" asp-controller="Task" asp-route-id="@issue.Id" asp-anti-forgery="true" method="post">
                     <input type="submit" value="End"/>
                 </form>
             }

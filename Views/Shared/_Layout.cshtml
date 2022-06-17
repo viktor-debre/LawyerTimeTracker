@@ -29,15 +29,13 @@
                         }
                     }
                 </ul>
-                <div class="user-actions">
+                <div class="nav-item dropdown">
                     <ul>
-                        <a class="text-dark user-action-title">@displayName</a>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetProfile">My Profile</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
-                        </li>
+                        <a class="nav-link text-dark" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@displayName</a>
+                        <div class="dropdown-menu" aria-abelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="GetProfile">My Profile</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -51,7 +49,7 @@
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
+    <div class="container-footer">
         &copy; 2022 - LawyerTimeTracker - All rights reserved
     </div>
 </footer>
