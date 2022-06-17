@@ -1,14 +1,43 @@
-﻿@{
+﻿@model LawyerTimeTracker.Models.ViewModels.UpdateAccountModel
+@{
     ViewData["Title"] = "Profile information";
     User authorizedUser = ViewBag.AuthorizedUser;
 }
 <h1>@ViewData["Title"]</h1>
-<h2>First name - @authorizedUser.FirstName</h2>
-<h2>Last name - @authorizedUser.LastName</h2>
-<h3>Email - @authorizedUser.Email</h3>
-@{
-    if(authorizedUser.Organization != null)
-    {
-        <h3>Organization - @authorizedUser.Organization.Name</h3>
-    }
-}
+
+<form asp-action="UpdateProfile" asp-controller="Account" asp-antiforgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div id="input-reg">
+        <div>
+            <label asp-for="Email">Email</label><br/>
+            <input type="text" asp-for="Email" value="@authorizedUser.Email" readonly/>
+            <span asp-validation-for="Email"/>
+        </div>
+        <div>
+            <label>First name</label><br/>
+            <input type="text" value="@authorizedUser.FirstName" readonly/>
+        </div>
+        <div>
+            <label>Last name</label><br/>
+            <input type="text" value="@authorizedUser.LastName" readonly/>
+        </div>
+        <div>
+            <label>Organization</label><br/>
+            <input type="text" value="@authorizedUser.Organization.Name" readonly/>
+        </div>
+        <div>
+            <label asp-for="Phonenumber">Phonenumber</label><br/>
+            <input type="text" asp-for="Phonenumber" value="@authorizedUser.Phonenumber"/>
+            <span asp-validation-for="Phonenumber"/>
+        </div>
+        <div>
+            <label asp-for="Skype">Skype</label><br/>
+            <input type="text" asp-for="Skype" value="@authorizedUser.Skype"/>
+            <span asp-validation-for="Skype"/>
+        </div>
+        
+        <div>
+            <input type="submit" value="Update"/>
+        </div>
+    </div>
+</form>

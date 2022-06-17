@@ -11,5 +11,7 @@ namespace LawyerTimeTracker.Models
         public Role Role { get; set; }
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
+        public string? Phonenumber { get; set; }
+        public string? Skype { get; set; }
     }
 }

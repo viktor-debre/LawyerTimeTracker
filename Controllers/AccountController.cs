@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.Models.ViewModels;
 using LawyerTimeTracker.Services;
 using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -70,6 +71,18 @@ namespace LawyerTimeTracker.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile(UpdateAccountModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _service.UpdateUser(model);
+            }
+            return RedirectToAction("GetProfile", "Home");
         }
 
         private async Task Authenticate(User user)
