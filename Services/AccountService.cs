@@ -28,10 +28,10 @@ namespace LawyerTimeTracker.Services
             return await databaseContext.Users.ToListAsync();
         }
 
-        public async Task<List<User>> GetUsersFromOrganization(int organizationId)
+        public List<User> GetUsersFromOrganization(int organizationId)
         {
-            return await databaseContext.Users.Where(userInDb => userInDb.OrganizationId == organizationId)
-                .ToListAsync();
+            return databaseContext.Users.Where(userInDb => userInDb.OrganizationId == organizationId)
+                .ToList();
         }
 
         public async Task<User> GetUserByEmail(string email)

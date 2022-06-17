@@ -13,12 +13,10 @@ namespace LawyerTimeTracker.Controllers
 {
     public class TaskController : Controller
     {
-        private ApplicationContext databaseContext;
         private AccountService _accountService;
         private TaskService _taskService;
         public TaskController(ApplicationContext context)
         {
-            databaseContext = context;
             _accountService = new AccountService(context);
             _taskService = new TaskService(context);
         }
@@ -29,10 +27,7 @@ namespace LawyerTimeTracker.Controllers
         {
             User currentUser = await _accountService.GetUserByEmail(User.Identity.Name);
             ViewBag.AuthorizedUser = currentUser;
-            var userTasks = await databaseContext.Issues
-                .Where(i => i.UserId == currentUser.Id)
-                .ToListAsync();
-            return View(userTasks);
+            return View(_taskService.GetTasksForUser(currentUser.Id));
         }
         
         [HttpPost]

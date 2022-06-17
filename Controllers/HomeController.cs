@@ -31,7 +31,7 @@ namespace LawyerTimeTracker.Controllers
         {
             User currentAdmin = await _accountService.GetUserByEmail(User.Identity.Name);
             ViewBag.AuthorizedUser = currentAdmin;
-            return View(await _accountService.GetUsersFromOrganization(currentAdmin.OrganizationId));
+            return View(_accountService.GetUsersFromOrganization(currentAdmin.OrganizationId));
         }
 
         public async Task<IActionResult> GetProfile()
