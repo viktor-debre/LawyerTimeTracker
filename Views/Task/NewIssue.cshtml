@@ -6,17 +6,17 @@
 <form id="add-new-task-form" class="add-new-task" asp-controller="Task" asp-action="NewTask">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div class="new-task-property">
-        <label asp-for="Title">Input title</label><br/>
-        <input type="text" asp-for="Title"/>
+        <label asp-for="Title">Input title</label>
+        <input type="text" asp-for="Title" id="title-input-text"/>
         <span asp-validation-for="Title"/>
     </div>
     <div class="new-task-property">
-        <label asp-for="Description">Input description</label><br/>
+        <label asp-for="Description">Input description</label>
         <input type="text" asp-for="Description"/>
         <span asp-validation-for="Description"/>
     </div>
     <div class="new-task-property">
-        <label asp-for="TypeOfTask">Input type of task</label><br/>
+        <label asp-for="TypeOfTask">Input type of task</label>
         <input type="text" asp-for="TypeOfTask"/>
         <span asp-validation-for="TypeOfTask"/>
     </div>
