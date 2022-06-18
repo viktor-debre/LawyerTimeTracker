@@ -2,11 +2,12 @@
 
 <form asp-controller="Task" asp-action="UpdateTask">
     <input type="number" asp-for="Id" readonly="true" style="display: none" value="@Model.Id"/>
-    <label asp-for="Title">Title</label><br/>
+    
+    <div> <label asp-for="Title">Title</label> </div>
     <input type="text" asp-for="Title" class="board-column-issue-title" value="@Model.Title"/>
-    <label asp-for="Description">Description</label><br/>
+    <div> <label asp-for="Description">Description</label> </div>
     <input type="text" asp-for="Description" name="description" class="board-column-issue-item" value="@Model.Description"/>
-    <label asp-for="TypeOfTask">Type of task</label><br/>
+    <div><label asp-for="TypeOfTask">Type of task</label> </div>
     <input type="text" asp-for="TypeOfTask" name="typeOfTask" class="board-column-issue-item" value="@Model.TypeOfTask"/>
     <div class="form-group">
         <input type="submit" value="Update task" class="add-new-task-form-button"/>
