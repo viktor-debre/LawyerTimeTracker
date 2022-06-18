@@ -98,6 +98,11 @@ body {
     padding: 10px;
 }
 
+#img-container img {
+    width: 150px;
+    height: 150px;
+}
+
 .board {
     display: flex;
     padding: 20px;

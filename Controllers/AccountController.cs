@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Models.ViewModels;
 using LawyerTimeTracker.Services;
+using LawyerTimeTracker.Utils;
 using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -80,6 +81,11 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                var photo = Request.Form.Files.GetFile("Image");
+                if (photo != null)
+                {
+                    model.Image = await IFormFileUtils.GetImage(photo);
+                }
                 await _service.UpdateUser(model);
             }
             return RedirectToAction("GetProfile", "Home");

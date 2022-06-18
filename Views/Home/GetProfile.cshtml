@@ -2,11 +2,25 @@
 @{
     ViewData["Title"] = "Profile information";
     User authorizedUser = ViewBag.AuthorizedUser;
+    
+    var imagePath = "/images/default_avatar.png";
+    if (authorizedUser.Image != null)
+    {
+       imagePath = "data:image;base64," + Convert.ToBase64String(authorizedUser.Image);
+    }
 }
 <h1>@ViewData["Title"]</h1>
 
 <form asp-action="UpdateProfile" asp-controller="Account" asp-antiforgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div id="img-container">
+        <div>
+            <input type="file" name="Image"/>
+            <span asp-validation-for="Image"/>
+        </div>
+        <img src="@imagePath"/>
+    </div>
+    
     <div id="input-reg">
         <div>
             <label asp-for="Email">Email</label><br/>
@@ -37,6 +51,10 @@
         </div>
         
         <div>
+            <input type="checkbox" asp-for="IsImageToDelete"/>
+            <label asp-for="IsImageToDelete">Delete image</label>
+            <span asp-validation-for="IsImageToDelete"/>
+            <br/>
             <input type="submit" value="Update"/>
         </div>
     </div>

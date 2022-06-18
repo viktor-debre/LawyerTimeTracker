@@ -6,7 +6,8 @@ namespace LawyerTimeTracker.Models.ViewModels
     {
         [Required]
         public string Email { get; set; }
-        
+        public bool IsImageToDelete { get; set; }
+        public byte[]? Image { get; set; }
         public string? Phonenumber { get; set; }
         public string? Skype { get; set; }
     }

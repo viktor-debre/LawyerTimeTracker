@@ -92,6 +92,13 @@ namespace LawyerTimeTracker.Services
             User user = await GetUserByEmail(model.Email);
             user.Phonenumber = model.Phonenumber;
             user.Skype = model.Skype;
+            if (model.IsImageToDelete)
+            {
+                user.Image = null;
+            } else if(model.Image != null)
+            {
+                user.Image = model.Image;
+            }
             databaseContext.Users.Update(user);
             await databaseContext.SaveChangesAsync();
         }
