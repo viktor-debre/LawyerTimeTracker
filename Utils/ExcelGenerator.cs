@@ -5,22 +5,17 @@ namespace LawyerTimeTracker.Utils
 {
     public class ExcelGenerator
     {
-        private static readonly ExcelPackage excelPackage = new();
+        private readonly ExcelPackage excelPackage = new();
         public static readonly String CONTENT_TYPE = "APPLICATION/octet-stream";
         public static readonly String FILE_NAME = "Report.xlsx";
         public static readonly String TASKS_WORKSHEET = "Tasks";
 
-        private ExcelGenerator()
-        {
-            
-        }
-
-        public static ExcelWorksheet AddWorksheetsToWorkbook(String worksheetName)
+        public ExcelWorksheet AddWorksheetsToWorkbook(String worksheetName)
         {
             return excelPackage.Workbook.Worksheets.Add(worksheetName);
         }
 
-        public static ExcelWorksheet FindOrAddWorksheet(String worksheetName)
+        public ExcelWorksheet FindOrAddWorksheet(String worksheetName)
         {
             try
             {
@@ -32,7 +27,7 @@ namespace LawyerTimeTracker.Utils
                     }
                 }
                 
-                return ExcelGenerator.AddWorksheetsToWorkbook(ExcelGenerator.TASKS_WORKSHEET);
+                return AddWorksheetsToWorkbook(TASKS_WORKSHEET);
             }
             catch(Exception exception)
             {
@@ -40,7 +35,7 @@ namespace LawyerTimeTracker.Utils
             }
         }
 
-        public static byte[] GetWorkbookAsBytes()
+        public byte[] GetWorkbookAsBytes()
         {
             return excelPackage.GetAsByteArray();
         }

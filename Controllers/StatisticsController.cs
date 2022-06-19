@@ -27,7 +27,7 @@ namespace LawyerTimeTracker.Controllers
         public IActionResult DownloadOrganizationTasksFile(int organizationId)
         {
             _reportService.FillOrganizationTasksWorksheet(organizationId);
-            return File(ExcelGenerator.GetWorkbookAsBytes(), ExcelGenerator.CONTENT_TYPE, ExcelGenerator.FILE_NAME);
+            return File(_reportService.GetReportFileAsBytes(), ExcelGenerator.CONTENT_TYPE, ExcelGenerator.FILE_NAME);
         }
     }
 }
