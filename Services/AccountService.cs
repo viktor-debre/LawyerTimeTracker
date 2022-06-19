@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.Models.ViewModels;
 using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -84,6 +85,22 @@ namespace LawyerTimeTracker.Services
         public async Task<Role> GetRoleByName(string rolename)
         {
             return databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == rolename).Result;
+        }
+
+        public async Task UpdateUser(UpdateAccountModel model)
+        {
+            User user = await GetUserByEmail(model.Email);
+            user.Phonenumber = model.Phonenumber;
+            user.Skype = model.Skype;
+            if (model.IsImageToDelete)
+            {
+                user.Image = null;
+            } else if(model.Image != null)
+            {
+                user.Image = model.Image;
+            }
+            databaseContext.Users.Update(user);
+            await databaseContext.SaveChangesAsync();
         }
     }
 }
