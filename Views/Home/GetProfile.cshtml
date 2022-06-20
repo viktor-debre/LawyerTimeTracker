@@ -14,11 +14,10 @@
 <form asp-action="UpdateProfile" asp-controller="Account" asp-antiforgery="true" enctype="multipart/form-data">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div id="img-container">
-        <div>
+        
             <input type="file" name="Image"/>
             <span asp-validation-for="Image"/>
-        </div>
-        <img src="@imagePath"/>
+            <img src="@imagePath"/>
     </div>
     
     <div id="input-reg">
