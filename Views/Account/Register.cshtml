@@ -1,4 +1,4 @@
-@model LawyerTimeTracker.ViewModels.RegisterModel
+@model LawyerTimeTracker.Models.ViewModels.RegisterModel
 
 <h2>Registration</h2>
 
@@ -22,12 +22,12 @@
         </div>
         <div>
             <label asp-for="Password">Input password</label><br/>
-            <input id = "password-style" asp-for="Password"/>
+            <input id="password-style" asp-for="Password"/>
             <span asp-validation-for="Password"/>
         </div>
         <div>
             <label asp-for="ConfirmPassword">Repeat password</label><br/>
-            <input id = "password-style" asp-for="ConfirmPassword"/>
+            <input id="password-style" asp-for="ConfirmPassword"/>
             <span asp-validation-for="ConfirmPassword"/>
         </div>
         <div>

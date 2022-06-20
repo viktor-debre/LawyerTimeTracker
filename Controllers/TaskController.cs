@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
+using LawyerTimeTracker.Models.ViewModels;
 using LawyerTimeTracker.Services;
-using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Controllers
 {
     public class TaskController : Controller
     {
-        private AccountService _accountService;
-        private TaskService _taskService;
+        private readonly AccountService _accountService;
+        private readonly TaskService _taskService;
+
         public TaskController(ApplicationContext context)
         {
             _accountService = new AccountService(context);
             _taskService = new TaskService(context);
         }
-        
+
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> MyTasks()
@@ -29,14 +28,14 @@ namespace LawyerTimeTracker.Controllers
             ViewBag.AuthorizedUser = currentUser;
             return View(_taskService.GetTasksForUser(currentUser.Id));
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Issues(List<Issue> issues)
         {
             ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return PartialView(issues);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> StartTask(int id)
         {
@@ -45,7 +44,7 @@ namespace LawyerTimeTracker.Controllers
             await _taskService.UpdateTask(currentIssue);
             return RedirectToAction("MyTasks", "Task");
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> EndTask(int id)
         {
@@ -54,27 +53,27 @@ namespace LawyerTimeTracker.Controllers
             await _taskService.UpdateTask(currentIssue);
             return RedirectToAction("MyTasks", "Task");
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> NewIssue(NewTaskModel newTask)
         {
             ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return PartialView();
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> NewTask(NewTaskModel newTask)  
+        public async Task<IActionResult> NewTask(NewTaskModel newTask)
         {
             await _taskService.AddTaskForUser(newTask, User.Identity.Name);
             return RedirectToAction("MyTasks", "Task");
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> SingleIssue(NewTaskModel issue)
         {
             return PartialView(issue);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> UpdateTask(NewTaskModel issue)
         {

@@ -9,8 +9,8 @@ namespace LawyerTimeTracker.Controllers
 {
     public class StatisticsController : Controller
     {
-        private AccountService _accountService;
-        private ReportService _reportService;
+        private readonly AccountService _accountService;
+        private readonly ReportService _reportService;
 
         public StatisticsController(ApplicationContext context)
         {

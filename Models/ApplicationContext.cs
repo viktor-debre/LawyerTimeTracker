@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 
 namespace LawyerTimeTracker.Models
@@ -14,64 +13,6 @@ namespace LawyerTimeTracker.Models
             : base(options)
         {
             Database.EnsureCreated();
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //Need remove in future, required for better testing
-            string adminRoleName = "admin";
-            string userRoleName = "user";
-
-            string adminEmail = "dev@nure.ua";
-            string adminFirstName = "Viktor";
-            string adminLastName = "Ivanov";
-            string adminPassword = "123456";
-            string adminEmail2 = "d";
-            string adminFirstName2 = "Ukrlan";
-            string adminLastName2 = "Sparrow";
-            string adminPassword2 = "1";
-
-            Role adminRole = new Role { Name = adminRoleName };
-            Role userRole = new Role { Name = userRoleName };
-            Organization adminOrganization1 = new Organization { Id = 1, Name = "Google" };
-            Organization adminOrganization2 = new Organization { Id = 2, Name = "Amazon" };
-
-            User adminUser = new User
-            {
-                Id = 1, Email = adminEmail, FirstName = adminFirstName, LastName = adminLastName,
-                Password = adminPassword, RoleName = adminRole.Name, OrganizationId = adminOrganization1.Id
-            };
-
-            User adminUser2 = new User
-            {
-                Id = 2, Email = adminEmail2, FirstName = adminFirstName2, LastName = adminLastName2,
-                Password = adminPassword2, RoleName = adminRole.Name, OrganizationId = adminOrganization2.Id
-            };
-
-            Issue firstTask = new Issue
-            {
-                Id = 1, Title = "Test issue 1", TypeOfTask = "Lawyer documentation", UserId = 1
-            };
-            Issue secondTask = new Issue
-            {
-                Id = 2, Title = "Test issue 2", TypeOfTask = "Lawyer documentation", UserId = 2,
-                StartTime = DateTime.Now
-            };
-            Issue thirdTask = new Issue
-            {
-                Id = 3, Title = "Test issue 3", TypeOfTask = "Lawyer documentation", UserId = 1,
-                StartTime = DateTime.Now, EndTime = DateTime.Now.AddMinutes(30)
-            };
-            Issue fifthTask = new Issue
-            {
-                Id = 4, Title = "Test issue 4", TypeOfTask = "Lawyer documentation", UserId = 1
-            };
-
-            modelBuilder.Entity<Organization>().HasData(new Organization[] { adminOrganization1, adminOrganization2 });
-            modelBuilder.Entity<Role>().HasData(new Role[] { adminRole, userRole });
-            modelBuilder.Entity<User>().HasData(new User[] { adminUser, adminUser2 });
-            modelBuilder.Entity<Issue>().HasData(new Issue[] { firstTask, secondTask, thirdTask, fifthTask });
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

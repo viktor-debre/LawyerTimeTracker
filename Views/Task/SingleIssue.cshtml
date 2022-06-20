@@ -1,13 +1,19 @@
-@model LawyerTimeTracker.ViewModels.NewTaskModel
+@model LawyerTimeTracker.Models.ViewModels.NewTaskModel
 
 <form asp-controller="Task" asp-action="UpdateTask">
     <input type="number" asp-for="Id" readonly="true" style="display: none" value="@Model.Id"/>
-    
-    <div> <label asp-for="Title">Title</label> </div>
+
+    <div>
+        <label asp-for="Title">Title</label>
+    </div>
     <input type="text" asp-for="Title" class="board-column-issue-title" value="@Model.Title"/>
-    <div> <label asp-for="Description">Description</label> </div>
+    <div>
+        <label asp-for="Description">Description</label>
+    </div>
     <input type="text" asp-for="Description" name="description" class="board-column-issue-item" value="@Model.Description"/>
-    <div><label asp-for="TypeOfTask">Type of task</label> </div>
+    <div>
+        <label asp-for="TypeOfTask">Type of task</label>
+    </div>
     <input type="text" asp-for="TypeOfTask" name="typeOfTask" class="board-column-issue-item" value="@Model.TypeOfTask"/>
     <div class="form-group">
         <input type="submit" value="Update task" class="add-new-task-form-button"/>

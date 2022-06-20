@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Utils;
-using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 
 namespace LawyerTimeTracker.Services
@@ -24,7 +21,8 @@ namespace LawyerTimeTracker.Services
             List<Issue> tasks = _taskService.GetAllOrganizationTasks(organizationId);
             ExcelWorksheet worksheet = _excelGenerator.FindOrAddWorksheet(ExcelGenerator.TASKS_WORKSHEET);
 
-            FillTitlesForWorksheet(worksheet, new List<string>{"Id", "Title", "Description", "Type", "Start Time", "End Time"});
+            FillTitlesForWorksheet(worksheet,
+                new List<string> {"Id", "Title", "Description", "Type", "Start Time", "End Time"});
             FillTasksForWorksheet(worksheet, tasks);
         }
 
@@ -40,7 +38,7 @@ namespace LawyerTimeTracker.Services
                 worksheet.Cells[1, i + 1].Value = titles[i];
             }
         }
-        
+
         private void FillTasksForWorksheet(ExcelWorksheet worksheet, List<Issue> tasks)
         {
             for (int i = 0; i < tasks.Count; i++)

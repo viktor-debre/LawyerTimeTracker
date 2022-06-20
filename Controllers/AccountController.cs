@@ -5,7 +5,6 @@ using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Models.ViewModels;
 using LawyerTimeTracker.Services;
 using LawyerTimeTracker.Utils;
-using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +14,11 @@ namespace LawyerTimeTracker.Controllers
 {
     public class AccountController : Controller
     {
-        private AccountService _service;
+        private readonly AccountService _accountService;
 
         public AccountController(ApplicationContext context)
         {
-            _service = new AccountService(context);
+            _accountService = new AccountService(context);
         }
 
         [HttpGet]
@@ -34,7 +33,7 @@ namespace LawyerTimeTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _service.GetUserByEmailAndPassword(model.Email, model.Password);
+                User user = await _accountService.GetUserByEmailAndPassword(model.Email, model.Password);
                 if (user != null)
                 {
                     await Authenticate(user);
@@ -51,7 +50,7 @@ namespace LawyerTimeTracker.Controllers
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            ViewBag.AuthorizedUser = await _service.GetUserByEmail(User.Identity.Name);
+            ViewBag.AuthorizedUser = await _accountService.GetUserByEmail(User.Identity.Name);
             return View();
         }
 
@@ -60,11 +59,11 @@ namespace LawyerTimeTracker.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            User currentAdmin = await _service.GetUserByEmail(User.Identity.Name);
+            User currentAdmin = await _accountService.GetUserByEmail(User.Identity.Name);
             ViewBag.AuthorizedUser = currentAdmin;
             if (ModelState.IsValid)
             {
-                await _service.RegisterUser(currentAdmin, model, ModelState);
+                await _accountService.RegisterUser(currentAdmin, model, ModelState);
                 if (ModelState.Root.Errors.Count == 0)
                 {
                     return RedirectToAction("ViewUsers", "Home");
@@ -84,10 +83,12 @@ namespace LawyerTimeTracker.Controllers
                 var photo = Request.Form.Files.GetFile("Image");
                 if (photo != null)
                 {
-                    model.Image = await IFormFileUtils.GetImage(photo);
+                    model.Image = await FormFileUtils.GetImage(photo);
                 }
-                await _service.UpdateUser(model);
+
+                await _accountService.UpdateUser(model);
             }
+
             return RedirectToAction("GetProfile", "Home");
         }
 

@@ -2,29 +2,29 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
-using LawyerTimeTracker.ViewModels;
+using LawyerTimeTracker.Models.ViewModels;
 
 namespace LawyerTimeTracker.Services
 {
     public class TaskService
     {
-        private ApplicationContext databaseContext;
-        private AccountService _accountService;
+        private readonly ApplicationContext _databaseContext;
+        private readonly AccountService _accountService;
 
         public TaskService(ApplicationContext context)
         {
-            databaseContext = context;
+            _databaseContext = context;
             _accountService = new AccountService(context);
         }
 
         public async Task<Issue> GetTaskById(int id)
         {
-            return databaseContext.Issues.Find(id);
+            return _databaseContext.Issues.Find(id);
         }
 
         public List<Issue> GetTasksForUser(int userId)
         {
-            return databaseContext.Issues.Where(i => i.UserId == userId).ToList();
+            return _databaseContext.Issues.Where(i => i.UserId == userId).ToList();
         }
 
         public List<Issue> GetAllOrganizationTasks(int organizationId)
@@ -40,8 +40,8 @@ namespace LawyerTimeTracker.Services
 
         public async Task UpdateTask(Issue issue)
         {
-            databaseContext.Issues.Update(issue);
-            await databaseContext.SaveChangesAsync();
+            _databaseContext.Issues.Update(issue);
+            await _databaseContext.SaveChangesAsync();
         }
 
         public async Task<Issue> DuplicateTask(NewTaskModel issue)
@@ -55,8 +55,8 @@ namespace LawyerTimeTracker.Services
 
         public async Task DeleteTask(int id)
         {
-            databaseContext.Issues.Remove(GetTaskById(id).Result);
-            await databaseContext.SaveChangesAsync();
+            _databaseContext.Issues.Remove(GetTaskById(id).Result);
+            await _databaseContext.SaveChangesAsync();
         }
 
         public async Task AddTaskForUser(NewTaskModel newTask, string email)
@@ -70,8 +70,8 @@ namespace LawyerTimeTracker.Services
                 TypeOfTask = newTask.TypeOfTask,
                 UserId = userId
             };
-            databaseContext.Issues.Add(issue);
-            await databaseContext.SaveChangesAsync();
+            _databaseContext.Issues.Add(issue);
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }

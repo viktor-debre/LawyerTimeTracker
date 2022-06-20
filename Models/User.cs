@@ -12,7 +12,7 @@ namespace LawyerTimeTracker.Models
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
         public byte[]? Image { get; set; }
-        public string? Phonenumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Skype { get; set; }
     }
 }
