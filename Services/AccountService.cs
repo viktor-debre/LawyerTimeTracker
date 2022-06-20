@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Models.ViewModels;
-using LawyerTimeTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,37 +10,32 @@ namespace LawyerTimeTracker.Services
 {
     public class AccountService
     {
-        private ApplicationContext databaseContext;
+        private readonly ApplicationContext _databaseContext;
 
         public AccountService(ApplicationContext context)
         {
-            databaseContext = context;
+            _databaseContext = context;
         }
 
-        public async Task SaveUser(User user)
+        private async Task SaveUser(User user)
         {
-            databaseContext.Users.Add(user);
-            await databaseContext.SaveChangesAsync();
-        }
-
-        public async Task<List<User>> GetUsers()
-        {
-            return await databaseContext.Users.ToListAsync();
+            _databaseContext.Users.Add(user);
+            await _databaseContext.SaveChangesAsync();
         }
 
         public List<User> GetUsersFromOrganization(int organizationId)
         {
-            return databaseContext.Users.Where(userInDb => userInDb.OrganizationId == organizationId)
+            return _databaseContext.Users.Where(userInDb => userInDb.OrganizationId == organizationId)
                 .ToList();
         }
 
         public async Task<User> GetUserByEmail(string email)
         {
-            User user = await databaseContext.Users
+            User user = await _databaseContext.Users
                 .FirstOrDefaultAsync(userInDatabase => userInDatabase.Email == email);
             if (user != null)
             {
-                user.Organization = await databaseContext.Organizations
+                user.Organization = await _databaseContext.Organizations
                     .FirstOrDefaultAsync(organization => organization.Id == user.OrganizationId);
             }
 
@@ -50,7 +44,7 @@ namespace LawyerTimeTracker.Services
 
         public async Task<User> GetUserByEmailAndPassword(string email, string password)
         {
-            return databaseContext.Users
+            return _databaseContext.Users
                 .Include(userInDatabase => userInDatabase.Role)
                 .FirstOrDefaultAsync(userInDatabase =>
                     userInDatabase.Email == email && userInDatabase.Password == password
@@ -82,25 +76,27 @@ namespace LawyerTimeTracker.Services
             }
         }
 
-        public async Task<Role> GetRoleByName(string rolename)
+        public async Task<Role> GetRoleByName(string roleName)
         {
-            return databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == rolename).Result;
+            return _databaseContext.Roles.FirstOrDefaultAsync(role => role.Name == roleName).Result;
         }
 
         public async Task UpdateUser(UpdateAccountModel model)
         {
             User user = await GetUserByEmail(model.Email);
-            user.Phonenumber = model.Phonenumber;
+            user.PhoneNumber = model.PhoneNumber;
             user.Skype = model.Skype;
             if (model.IsImageToDelete)
             {
                 user.Image = null;
-            } else if(model.Image != null)
+            }
+            else if (model.Image != null)
             {
                 user.Image = model.Image;
             }
-            databaseContext.Users.Update(user);
-            await databaseContext.SaveChangesAsync();
+
+            _databaseContext.Users.Update(user);
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }

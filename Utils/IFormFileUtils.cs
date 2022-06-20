@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace LawyerTimeTracker.Utils
 {
-    public static class IFormFileUtils
+    public static class FormFileUtils
     {
         public static async Task<byte[]> GetImage(IFormFile image)
         {

@@ -4,18 +4,15 @@ using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace LawyerTimeTracker.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private AccountService _accountService;
-        
-        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
+        private readonly AccountService _accountService;
+
+        public HomeController(ApplicationContext context)
         {
-            _logger = logger;
             _accountService = new AccountService(context);
         }
 
