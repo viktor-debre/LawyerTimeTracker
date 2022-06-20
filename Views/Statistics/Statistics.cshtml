@@ -1,0 +1,9 @@
+@{
+    User authorizedUser = ViewBag.AuthorizedUser;
+}
+<div>
+    <div>Excel section</div>
+    <form asp-action="DownloadOrganizationTasksFile" asp-controller="Statistics" asp-route-organizationId="@authorizedUser.Organization.Id" asp-anti-forgery="true" method="post">
+        <input type="submit" value="Download All Tasks for Organization"/>
+    </form>
+</div>
