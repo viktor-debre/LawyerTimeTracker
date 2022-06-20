@@ -2,6 +2,7 @@
 using LawyerTimeTracker.Models;
 using LawyerTimeTracker.Services;
 using LawyerTimeTracker.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LawyerTimeTracker.Controllers
@@ -17,6 +18,7 @@ namespace LawyerTimeTracker.Controllers
             _reportService = new ReportService(context);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Statistics()
         {
