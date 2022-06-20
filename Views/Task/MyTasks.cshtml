@@ -2,25 +2,25 @@
 @model IEnumerable<Issue>
 @{
     ViewBag.Title = "Tasks";
-}
-@{
+
     List<Issue> toDo = new();
     List<Issue> inProgress = new();
     List<Issue> done = new();
-}
-@foreach (var item in Model)
-{
-    if (@item.StartTime == null && @item.EndTime == null)
+
+    foreach (var item in Model)
     {
-        toDo.Add(item);
-    }
-    else if (@item.EndTime == null)
-    {
-        inProgress.Add(item);
-    }
-    else
-    {
-        done.Add(item);
+        if (@item.StartTime == null && @item.EndTime == null)
+        {
+            toDo.Add(item);
+        }
+        else if (@item.EndTime == null)
+        {
+            inProgress.Add(item);
+        }
+        else
+        {
+            done.Add(item);
+        }
     }
 }
 <div class="board">
